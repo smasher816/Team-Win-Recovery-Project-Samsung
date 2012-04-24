@@ -98,7 +98,7 @@ from here you should be able to build your CM9 kernel with TWRP
 Then flash the kernel stored as `~/CM9/out/target/product/captivatemtd/boot.img`  
 
 Now boot into your new CM9 kernel (with CM9 ramdisk), or reboot into TWRP (compiled on CM7)  
-*emphasis*Enjoy!*emphasis*  
+**Enjoy!**  
 
 TODO
 ----
