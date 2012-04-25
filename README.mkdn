@@ -3,6 +3,7 @@ Team Win Recovery Project - Samsung
 
 Note: This is BETA quality, a WIP for developers only
 =====================================================
+
 If you have any problems, sugestions, etc feel free to hop into `#twrp on irc.freenode.net` for some IRC help.  
 I `Smasher816` (or my bouncer) will always be on, so feel free to msg me. 
 
