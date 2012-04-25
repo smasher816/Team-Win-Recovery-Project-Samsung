@@ -1,15 +1,16 @@
 Team Win Recovery Project - Samsung
 ===================================
 
+Note: This is BETA quality, a WIP for developers only
+=====================================================
+If you have any problems, sugestions, etc feel free to hop into `#twrp on irc.freenode.net` for some IRC help.  
+I `Smasher816` (or my bouncer) will always be on, so feel free to msg me. 
+
 INTRO
 -----
 HTC phones have a separate recovery partition, allowing recoveries such as TWRP to be flashed independent of the rom installed.  
 However, most samsung phones (excluding nexus') must have the recovery built into the kernel, making recoveries such as TWRP uncommon.  
-This tutorial will hopefully make this a problem of the past.  
-
-Note: This is all still a heavy WIP, mostly for developers and beta testers.  
-So if you have any problems, sugestions, etc feel free to hop into `#twrp on irc.freenode.net` for some IRC help.  
-I `Smasher816` (or my bouncer) will always be on, so feel free to msg me.  
+This tutorial will hopefully make this a problem of the past.   
 
 Compile TWRP
 ------------
@@ -59,26 +60,25 @@ From here you can flash the kernel (stored as `~/CM7/device/samsung/captivate/ke
 or create a flashable CM7 zip with `brunch captivatemtd`  
 Either way, everything made should have TWRP in it.  
 
-Build TWRP kernel
+Build TWRP Kernel
 -----------------
-This process used to be long and confusing (feel free to look at README-OLD.mkdn)  
+This process used to be long and confusing (feel free to look at [README-OLD.mkdn](https://github.com/smasher816/Team-Win-Recovery-Project-Samsung/blob/master/README-OLD.mkdn))  
 I learned that the `glitch.sh` script runs `mkshbootimg.py` which fuses the `zImage` (kernel) `ramdisk-image` (initramfs) `ramdisk-recovery` (recovery) into one flashable `boot.img`  
 This knowledge led me to develop CM9 kernels with CM7 (TWRP) ramdisks, however this required developer work.  
 
 Now **Dees_Troy** has converted this script to a C program runable on the device,  
 this allows people to inject any recovery-ramdisk.img (ex: TWRP) into any kernel (ex: Glitch), all on the device without any developer knowledge.  
-Once a developer builds a TWRP ramdisk in a CM7 tree for devices, people will be able to inject it into their current kernels with one command  
-(later to be integrated into the goo app).  
+Once a developer builds TWRP ramdisks, people will be able to inject it into their current kernels with one command (later to be integrated into the goo app).  
 
 (Can download straight to device instead of using adb push, and may use a terminal emulator app instead of adb shell)  
 
-Download the `installtwrp` binary, and push it to your phone  
+Download the [installtwrp](https://github.com/smasher816/Team-Win-Recovery-Project-Samsung/blob/master/installtwrp) binary, and push it to your phone  
 
     adb root && adb remount
     adb push installtwrp /system/bin
     adb shell chmod 755 /system/bin/installtwrp
     
-Use `installtwrp` to inject TWRP into your kernel of choice  
+Use `installtwrp` to inject a TWRP recovery-ramdisk.img into your kernel of choice  
 
     adb push recovery-ramdisk.img /sdcard/	(provided by a developer, I have a few for SGS devices above)
     adb shell
