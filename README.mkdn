@@ -1,5 +1,5 @@
-Team Win Recovery - Samsung
-===========================
+Team Win Recovery Project - Samsung
+===================================
 
 INTRO
 -----
@@ -7,18 +7,20 @@ HTC phones have a separate recovery partition, allowing recoveries such as TWRP 
 However, most samsung phones (excluding nexus') must have the recovery built into the kernel, making recoveries such as TWRP uncommon.  
 This tutorial will hopefully make this a problem of the past.  
 
-Note: throughout the tutorial I will use folders such as  
-`~/CM7` and `~/CM9` to refer to my android source trees (replace with yours, usually `~/android/system`)  
-and `captivatemtd` to refer to my device (replace with your samsung model)  
-Also: if you have any problems feel free to hop into `#twrp on irc.freenode.net` for some IRC help  
-I (or my bouncer) will always be on, so feel free to msg me.  
+Note: This is all still a heavy WIP, mostly for developers and beta testers.  
+So if you have any problems, sugestions, etc feel free to hop into `#twrp on irc.freenode.net` for some IRC help.  
+I `Smasher816` (or my bouncer) will always be on, so feel free to msg me.  
 
-CM7 SETUP
----------
+Compile TWRP
+------------
+(If you are a normal person who just wants TWRP on their device, let a developer do this. You can follow the later part with relative ease)
+
 TWRP is only designed to be made against the CM7 tree so we will set that up.  
 Go ahead and follow the cyanogenmod wiki to setup your build environment  
 (ex: http://wiki.cyanogenmod.com/wiki/Samsung_Captivate:_Compile_CyanogenMod_(Linux))  
 A completed install should have the necessary programs to build, the full repo synced, proprietary files for your vendor and phone, and prebuilts such as rom manager.  
+
+(replace `~/CM7` with your CM7 source path, and `captivatemtd` with your device)
 
 Next we must add some extra folders used by TWRP  
 
@@ -43,8 +45,7 @@ at the end of the `BoardConfigCommon.mk` file add (change to your screen size)
 
     DEVICE_RESOLUTION := 480x800
 
-Compile CM7
------------
+----
 
 Your CM7 tree is now ready to build TWRP, so lets make some ramdisks  
 cd to `~/CM7` and run  
@@ -58,50 +59,33 @@ From here you can flash the kernel (stored as `~/CM7/device/samsung/captivate/ke
 or create a flashable CM7 zip with `brunch captivatemtd`  
 Either way, everything made should have TWRP in it.  
 
-CM9 Setup
----------
-TWRP was made for CM7 and will only compile on a CM7 android tree,  
-therefore if you want to get working TWRP on CM9 you must follow the CM7 instructions above  
-(Or use the prebuilt ramdisks I provided for some devices)  
+Build TWRP kernel
+-----------------
+This process used to be long and confusing (feel free to look at README-OLD.mkdn)  
+I learned that the `glitch.sh` script runs `mkshbootimg.py` which fuses the `zImage` (kernel) `ramdisk-image` (initramfs) `ramdisk-recovery` (recovery) into one flashable `boot.img`  
+This knowledge led me to develop CM9 kernels with CM7 (TWRP) ramdisks, however this required developer work.  
 
-Go ahead and setup CM9 following some tutorial online  
-Next add the two folders and edit the device config files as shown in the CM7 section above  
-(but do not replace `~/CM9/bootable/recovery` `~/CM9/build` or `~/external/busybox`)  
+Now **Dees_Troy** has converted this script to a C program runable on the device,  
+this allows people to inject any recovery-ramdisk.img (ex: TWRP) into any kernel (ex: Glitch), all on the device without any developer knowledge.  
+Once a developer builds a TWRP ramdisk in a CM7 tree for devices, people will be able to inject it into their current kernels with one command
+(later to be integrated into the goo app).  
 
-From here you can build initramfs using the same command as CM7 (but in the CM9 folder)  
+(Can download straight to device instead of using adb push, and may use a terminal emulator app instead of adb shell)  
 
-Now that we have CM9 ramdisks we can make a working CM9 kernel.  
-Each `boot.img` kernel is actaully three parts a `zImage` (actual kernel), `ramdisk.img` (drivers and stuff), and `ramdisk-recovery.img` (recovery).  
-We will make a kernel using CM9 zImage and ramdisks, but use the CM7 recovery ramdisk.  
+Download the `installtwrp` binary, and push it to your phone  
 
-In `glitch.sh` for the Glitch kernel (not sure where else for others), there should be a line that looks like  
+    adb root && adb remount
+    adb push installtwrp /system/bin
+    adb shell chmod 755 /system/bin/installtwrp
+    
+Use `installtwrp` to inject TWRP into your kernel of choice  
 
-    $repo/device/samsung/aries-common/mkshbootimg.py $KERNEL_DIR/release/boot.img
-    "$target_dir"/arch/arm/boot/zImage
-    $repo/out/target/product/$target/ramdisk.img
-    $repo/out/target/product/$target/ramdisk-recovery.img
+    adb push recovery-ramdisk.img /sdcard/	(provided by a developer, I have a few for SGS devices above)
+    adb shell
+    cd /sdcard/
+    unzip CWM-FLASHABLE-KERNEL-FILE.zip boot.img
+    installtwrp boot.img recovery-ramdisk.img boot-twrp.img
+    flash_image boot boot-new.img		(or use heimdall or anything else that can flash kernel images)
 
-you can edit the third parameter to point to the ramdisk-recovery in CM7 not CM9, EX:  
-
-    $repo/device/samsung/aries-common/mkshbootimg.py $KERNEL_DIR/release/boot.img
-    "$target_dir"/arch/arm/boot/zImage
-    $repo/out/target/product/$target/ramdisk.img
-    ~/CM7/out/target/product/$target/ramdisk-recovery.img
-
-Compile CM9 kernel
-------------------
-
-from here you should be able to build your CM9 kernel with TWRP  
-
-    cd ~/CM9 && make out/target/product/captivatemtd/boot.img
-
-Then flash the kernel stored as `~/CM9/out/target/product/captivatemtd/boot.img`  
-
-Now boot into your new CM9 kernel (with CM9 ramdisk), or reboot into TWRP (compiled on CM7)  
-**Enjoy!**  
-
-TODO
-----
-Document changes to use CM7 recovery ramdisk on stock (non-glitch) kernel.  
-Fix backup and restore errors (cannot create folder errno=22)  
-Misc.  
+Enjoy!
+======
