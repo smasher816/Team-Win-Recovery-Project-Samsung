@@ -1,15 +1,17 @@
 Team Win Recovery Project - Samsung
 ===================================
 
+Note: This is all still a heavy WIP, mostly for developers and beta testers.  
+============================================================================
+
+If you have any problems, sugestions, etc feel free to hop into `#twrp on irc.freenode.net` for some IRC help.  
+I `Smasher816` (or my bouncer) will always be on, so feel free to msg me. 
+
 INTRO
 -----
 HTC phones have a separate recovery partition, allowing recoveries such as TWRP to be flashed independent of the rom installed.  
 However, most samsung phones (excluding nexus') must have the recovery built into the kernel, making recoveries such as TWRP uncommon.  
-This tutorial will hopefully make this a problem of the past.  
-
-Note: This is all still a heavy WIP, mostly for developers and beta testers.  
-So if you have any problems, sugestions, etc feel free to hop into `#twrp on irc.freenode.net` for some IRC help.  
-I `Smasher816` (or my bouncer) will always be on, so feel free to msg me.  
+This tutorial will hopefully make this a problem of the past.   
 
 Compile TWRP
 ------------
@@ -59,7 +61,7 @@ From here you can flash the kernel (stored as `~/CM7/device/samsung/captivate/ke
 or create a flashable CM7 zip with `brunch captivatemtd`  
 Either way, everything made should have TWRP in it.  
 
-Build TWRP kernel
+Build TWRP Ki ernel
 -----------------
 This process used to be long and confusing (feel free to look at README-OLD.mkdn)  
 I learned that the `glitch.sh` script runs `mkshbootimg.py` which fuses the `zImage` (kernel) `ramdisk-image` (initramfs) `ramdisk-recovery` (recovery) into one flashable `boot.img`  
@@ -67,8 +69,7 @@ This knowledge led me to develop CM9 kernels with CM7 (TWRP) ramdisks, however t
 
 Now **Dees_Troy** has converted this script to a C program runable on the device,  
 this allows people to inject any recovery-ramdisk.img (ex: TWRP) into any kernel (ex: Glitch), all on the device without any developer knowledge.  
-Once a developer builds a TWRP ramdisk in a CM7 tree for devices, people will be able to inject it into their current kernels with one command  
-(later to be integrated into the goo app).  
+Once a developer builds TWRP ramdisks, people will be able to inject it into their current kernels with one command (later to be integrated into the goo app).  
 
 (Can download straight to device instead of using adb push, and may use a terminal emulator app instead of adb shell)  
 
