@@ -3,6 +3,7 @@ Team Win Recovery Project - Samsung
 
 Note: This is BETA quality, a WIP for developers only
 =====================================================
+
 If you have any problems, sugestions, etc feel free to hop into `#twrp on irc.freenode.net` for some IRC help.  
 I `Smasher816` (or my bouncer) will always be on, so feel free to msg me. 
 
@@ -84,7 +85,7 @@ Use `installtwrp` to inject a TWRP recovery-ramdisk.img into your kernel of choi
     adb shell
     cd /sdcard/
     unzip CWM-FLASHABLE-KERNEL-FILE.zip boot.img
-    installtwrp boot.img recovery-ramdisk.img boot-twrp.img
+    installtwrp boot.img recovery-ramdisk.img boot-new.img
     flash_image boot boot-new.img		(or use heimdall or anything else that can flash kernel images)
 
 Enjoy!
