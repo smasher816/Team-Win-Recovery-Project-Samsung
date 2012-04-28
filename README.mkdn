@@ -20,9 +20,11 @@ Compile TWRP
 ------------
 (If I have already provided a ramdisk-recovery.img for a [device](https://github.com/smasher816/Team-Win-Recovery-Project-Samsung/device), you are still encouraged to build it, keep it updated, and support the device and its users. Sorry but I can't manage every one)  
 
+[How to Compile TWRP from Source](http://rootzwiki.com/topic/23903-how-to-compile-twrp-from-source/) has more information and possible device flags, to serve as a good reference.
+
 TWRP is only designed to be made against the CM7 tree so we will set that up.  
 Go ahead and follow the cyanogenmod wiki to setup your build environment  
-(ex: http://wiki.cyanogenmod.com/wiki/Samsung_Captivate:_Compile_CyanogenMod_(Linux))  
+(ex: [Compile CyanogenMod (Linux)](http://wiki.cyanogenmod.com/wiki/Samsung_Captivate:_Compile_CyanogenMod_(Linux)))  
 A completed install should have the necessary programs to build, the full repo synced, proprietary files for your vendor and phone, and prebuilts such as rom manager.  
 
 (replace `~/CM7` with your CM7 source path, and `captivatemtd` with your device)  
@@ -81,7 +83,7 @@ Flash the newly injected `boot.img` (with `flash_image boot boot.img`, `heimdall
 
 This process has been streamlined with .sh scripts, and now cwm flashable zips.  
 
-Download [injectTWRP-example.zip](https://github.com/smasher816/Team-Win-Recovery-Project-Samsung/injectTWRP-example.zip) from above,  
+Download [injectTWRP-template.zip](https://github.com/smasher816/Team-Win-Recovery-Project-Samsung/injectTWRP-example.zip) from above,  
 add your devices `ramdisk-recovery.img`,  
 and modify the `updater-script` to your liking.  
 
