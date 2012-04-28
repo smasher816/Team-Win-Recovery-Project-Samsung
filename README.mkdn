@@ -24,7 +24,7 @@ Compile TWRP
 
 TWRP is only designed to be made against the CM7 tree so we will set that up.  
 Go ahead and follow the cyanogenmod wiki to setup your build environment  
-(ex: [Compile CyanogenMod (Linux)](http://wiki.cyanogenmod.com/wiki/Samsung_Captivate:_Compile_CyanogenMod_(Linux)))  
+(ex: [Compile CyanogenMod (Linux)](http://wiki.cyanogenmod.com/wiki/Samsung_Captivate:_Compile_CyanogenMod_(Linux))  
 A completed install should have the necessary programs to build, the full repo synced, proprietary files for your vendor and phone, and prebuilts such as rom manager.  
 
 (replace `~/CM7` with your CM7 source path, and `captivatemtd` with your device)  
